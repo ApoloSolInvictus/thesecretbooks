@@ -16,13 +16,25 @@ from urllib.request import Request, urlopen
 
 BASE_URL = "https://dev-the-secret-books.pantheonsite.io"
 FALLBACK_URL = "https://live-the-secret-books.pantheonsite.io"
+CUSTOM_DOMAIN = "tsb.wstudio3d.com"
+SITE_URL = f"https://{CUSTOM_DOMAIN}"
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs"
 ASSETS = OUT / "assets"
 USER_AGENT = "TheSecretBooksStaticExporter/1.0"
+SEO_IMAGE_ASSET = "assets/img/TSB4.jpeg"
+LOCAL_ASSET_SOURCES = {
+    "hero_bg": Path(r"C:\Users\Ronny\Desktop\Invictus\TSB1.jpg"),
+    "book": Path(r"C:\Users\Ronny\Desktop\Invictus\TSB2.png"),
+    "book_cover": Path(r"C:\Users\Ronny\Desktop\Invictus\TSB3.png"),
+    "seo_image": Path(r"C:\Users\Ronny\Desktop\Invictus\TSB4.jpeg"),
+}
 PDF_OVERRIDES = {
     "jasher": "https://www.holybooks.com/wp-content/uploads/Book-of-Jasher.pdf",
 }
+
+SITE_CSS = """*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{margin:0;max-width:100%;overflow-x:hidden;background:#f5f5f7;color:#1d1d1f;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}a{color:inherit;text-decoration:none}img{max-width:100%;display:block}.site-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px clamp(22px,4vw,72px);background:rgba(255,255,255,.86);border-bottom:1px solid rgba(0,0,0,.08);backdrop-filter:saturate(180%) blur(20px);color:#1d1d1f}.home .site-header{position:absolute;left:0;right:0;background:transparent;border:0;backdrop-filter:none;color:#f5f5f7}.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:0}.brand img{width:34px;height:34px;border-radius:50%}.brand span{font-size:.94rem}.site-header nav{display:flex;align-items:center;flex-wrap:wrap;gap:22px;background:transparent}.site-header nav a{padding:0;border:0;background:transparent;color:inherit;font-size:.9rem;font-weight:600;letter-spacing:0;opacity:.82}.site-header nav a:hover{opacity:1}.hero{position:relative;min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,540px);align-items:center;gap:clamp(28px,5vw,76px);padding:126px clamp(24px,6vw,96px) 74px;background:var(--hero-image) center/cover no-repeat;overflow:hidden;color:#fff}.hero-mask{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.62),rgba(0,0,0,.2) 54%,rgba(0,0,0,.38));z-index:0}.hero-copy,.hero-book{position:relative;z-index:1;min-width:0}.hero-copy{max-width:760px}.hero-logo{display:none}.hero h1,.page-hero h1,.book-reader h1,.product-copy h1{margin:0;font-size:4.8rem;line-height:.96;font-weight:700;letter-spacing:0;overflow-wrap:anywhere}.hero h1{color:#fff;text-shadow:0 18px 42px rgba(0,0,0,.48)}.hero p,.page-hero p,.book-reader p,.product-copy p{max-width:720px;margin:22px 0 0;color:rgba(255,255,255,.86);font-size:1.18rem;line-height:1.65}.hero-book{width:min(540px,42vw);justify-self:center;filter:drop-shadow(0 38px 48px rgba(0,0,0,.52));transform:translateY(14px) scale(1.1)}.hero-actions,.reader-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 18px;border:1px solid rgba(29,29,31,.16);border-radius:999px;background:rgba(255,255,255,.72);color:#1d1d1f;font-weight:700;letter-spacing:0;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease}.button:hover{transform:translateY(-1px);background:#fff;border-color:rgba(29,29,31,.28);box-shadow:0 10px 28px rgba(0,0,0,.12)}.button.primary{background:#0071e3;color:#fff;border-color:#0071e3}.button.primary:hover{background:#147ce5;border-color:#147ce5}.button.full{width:100%;margin-top:12px}.book-read{padding:92px clamp(24px,7vw,112px);background:#fff;overflow:hidden}.book-read-inner{max-width:900px;color:#1d1d1f}.book-read h2,.characters-information h2,.author-bio h2,.features-information h2,.blog-information h2,.section-heading h2{margin:0 0 16px;color:#1d1d1f;font-size:3.4rem;line-height:1.04;font-weight:700;letter-spacing:0;overflow-wrap:anywhere}.book-read p,.characters-information p,.author-bio p,.features-information p,.blog-information p{color:#515154;font-size:1.06rem;line-height:1.7}.characters-information{padding:86px clamp(24px,7vw,112px);background:#f5f5f7;overflow:hidden}.character-slide{display:grid;grid-template-columns:250px minmax(0,760px);gap:34px;align-items:center;margin-top:28px}.character-slide img{width:250px;height:250px;object-fit:cover;border-radius:8px;box-shadow:0 22px 52px rgba(0,0,0,.12)}.character-slide h3{margin:0;color:#1d1d1f;font-size:2rem;line-height:1.08;font-weight:700;letter-spacing:0;overflow-wrap:anywhere}.author-information{display:grid;grid-template-columns:minmax(260px,42%) minmax(0,1fr);min-height:500px;background:#fff;overflow:hidden}.author-photo{min-height:500px;background:var(--author-image) center/contain no-repeat #f5f5f7}.author-bio{padding:clamp(48px,7vw,104px);align-self:center;min-width:0}.features-information{padding:86px clamp(24px,7vw,112px);background:#f5f5f7;color:#1d1d1f;overflow:hidden}.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:30px}.feature-box{min-height:220px;padding:26px;border:1px solid rgba(29,29,31,.08);border-radius:8px;background:#fff;box-shadow:0 18px 50px rgba(0,0,0,.06)}.feature-box h3{margin:0 0 12px;color:#1d1d1f;font-size:1.26rem;line-height:1.15}.blog-information{padding:86px clamp(24px,7vw,112px);background:#fff;overflow:hidden}.secret-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:26px}.section{padding:80px clamp(24px,6vw,96px);overflow:hidden}.band{background:#f5f5f7}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:26px}.eyebrow{margin:0 0 10px;color:#6e6e73;font-size:.78rem;font-weight:800;letter-spacing:0;text-transform:uppercase}.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:18px}.book-grid.compact{grid-template-columns:repeat(auto-fit,minmax(158px,1fr))}.book-card{border:1px solid rgba(29,29,31,.08);border-radius:8px;background:#fff;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.06);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.book-card:hover{transform:translateY(-3px);border-color:rgba(0,113,227,.34);box-shadow:0 24px 60px rgba(0,0,0,.12)}.book-card a{display:grid;grid-template-rows:1fr auto;height:100%}.book-card img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#e8e8ed}.book-card span{min-height:70px;padding:13px;color:#1d1d1f;font-weight:700;line-height:1.25}.centered{text-align:center;margin-top:30px}.page-hero{padding:110px clamp(24px,6vw,96px) 62px;background:#fff;border-bottom:1px solid rgba(0,0,0,.08)}.page-hero.narrow{min-height:unset}.page-hero h1,.book-reader h1,.product-copy h1{color:#1d1d1f}.page-hero p,.book-reader p,.product-copy p{color:#515154}.search-label{display:grid;gap:7px;max-width:540px;margin-top:26px}.search-label span{color:#6e6e73;font-weight:700}.search-label input{width:100%;min-height:48px;border:1px solid rgba(29,29,31,.15);border-radius:999px;background:#f5f5f7;color:#1d1d1f;padding:0 18px;font:inherit;outline:none}.search-label input:focus{border-color:#0071e3;background:#fff}.book-layout{display:grid;grid-template-columns:minmax(220px,350px) minmax(0,1fr);gap:40px;padding:58px clamp(24px,5vw,76px) 76px;background:#f5f5f7}.book-aside{position:sticky;top:96px;align-self:start}.book-cover{width:100%;border-radius:8px;border:1px solid rgba(29,29,31,.1);background:#e8e8ed;box-shadow:0 24px 60px rgba(0,0,0,.12)}.book-reader{min-width:0}.pdf-frame{width:100%;height:min(78vh,920px);margin-top:26px;border:1px solid rgba(29,29,31,.12);border-radius:8px;background:#fff}.product-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,460px);align-items:center;gap:44px;padding:90px clamp(24px,6vw,96px);background:#fff}.product-image{justify-self:center;max-height:640px;filter:drop-shadow(0 28px 34px rgba(0,0,0,.18))}.product-image.phone{max-height:540px}.pdf-panel,.audio-panel{padding:0 clamp(24px,6vw,96px) 76px;background:#fff}.audio-panel audio{width:100%;max-width:760px}.site-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:28px clamp(24px,4vw,72px);color:#6e6e73;background:#f5f5f7;border-top:1px solid rgba(0,0,0,.08)}.site-footer p{margin:0}.site-footer a{color:#1d1d1f;font-weight:700}.hidden{display:none!important}@media (max-width:960px){.hero{grid-template-columns:1fr;min-height:unset;padding-top:112px}.hero-copy{max-width:680px}.hero-book{width:min(430px,86vw);transform:none;justify-self:start}.feature-grid,.secret-three{grid-template-columns:1fr}.book-read h2,.characters-information h2,.author-bio h2,.features-information h2,.blog-information h2,.section-heading h2{font-size:2.55rem}}@media (max-width:720px){.site-header{align-items:flex-start;flex-direction:column;gap:14px;padding:18px 22px}.site-header nav{gap:16px}.home .site-header{position:absolute}.hero{padding:132px 24px 54px;background-position:center;gap:24px}.hero h1,.page-hero h1,.book-reader h1,.product-copy h1{font-size:3rem;line-height:1}.hero p,.page-hero p,.book-reader p,.product-copy p,.book-read p,.characters-information p,.author-bio p,.features-information p,.blog-information p{font-size:1rem;line-height:1.62}.hero-actions,.reader-actions{display:grid;grid-template-columns:1fr;width:100%;max-width:330px}.button{width:100%;white-space:normal;text-align:center}.hero-book{width:min(330px,86vw)}.book-read,.characters-information,.features-information,.blog-information,.section,.product-layout,.page-hero{padding-left:24px;padding-right:24px}.book-read h2,.characters-information h2,.author-bio h2,.features-information h2,.blog-information h2,.section-heading h2{font-size:2.1rem}.book-layout,.product-layout,.author-information,.character-slide{grid-template-columns:1fr}.author-photo{min-height:330px}.author-bio{padding:46px 24px}.section-heading{display:block}.book-aside{position:static}.pdf-frame{height:68vh}.book-grid{grid-template-columns:repeat(auto-fill,minmax(138px,1fr))}.book-card span{min-height:82px}.site-footer{align-items:flex-start;flex-direction:column}}"""
+SITE_CSS_OVERRIDES = """@media (max-width:720px){.hero h1{font-size:2.55rem;line-height:1.04}.hero-copy{max-width:100%}}@media (max-width:390px){.hero h1{font-size:2.4rem}.site-header nav{gap:12px}.site-header nav a{font-size:.86rem}}"""
 
 
 @dataclass
@@ -108,6 +120,21 @@ def download_asset(url: str, subdir: str) -> str:
     return f"assets/{subdir}/{name}".replace("\\", "/")
 
 
+def copy_local_asset(path: Path, subdir: str) -> str:
+    if not path.exists():
+        print(f"warning: local asset not found: {path}")
+        return ""
+
+    asset_dir = ASSETS / subdir
+    asset_dir.mkdir(parents=True, exist_ok=True)
+    dest = asset_dir / path.name
+    if not dest.exists() or dest.stat().st_size != path.stat().st_size:
+        print(f"copy {subdir}/{path.name}")
+        shutil.copy2(path, dest)
+
+    return f"assets/{subdir}/{path.name}".replace("\\", "/")
+
+
 def rel(path: str, depth: int) -> str:
     if not path:
         return ""
@@ -134,6 +161,9 @@ def page_start(title: str, depth: int = 0, body_class: str = "") -> str:
     css = rel("assets/css/styles.css", depth)
     js = rel("assets/js/site.js", depth)
     icon = rel("assets/img/TSB-Logo-App-50x50.png", depth)
+    page_title = f"{title} - The Secret Books"
+    description = "The Secret Books is a clean digital library of apocryphal, lost, and hidden biblical writings."
+    seo_image = f"{SITE_URL}/{SEO_IMAGE_ASSET}"
     nav = [
         ("Home", rel("index.html", depth)),
         ("Books", rel("books/index.html", depth)),
@@ -146,9 +176,19 @@ def page_start(title: str, depth: int = 0, body_class: str = "") -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{escape(title)} - The Secret Books</title>
-  <meta name="description" content="The Secret Books: a static library of apocryphal and lost biblical books.">
+  <title>{escape(page_title)}</title>
+  <meta name="description" content="{escape(description)}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Secret Books">
+  <meta property="og:title" content="{escape(page_title)}">
+  <meta property="og:description" content="{escape(description)}">
+  <meta property="og:image" content="{seo_image}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{escape(page_title)}">
+  <meta name="twitter:description" content="{escape(description)}">
+  <meta name="twitter:image" content="{seo_image}">
   <link rel="icon" href="{icon}">
+  <link rel="apple-touch-icon" href="{rel('assets/img/TSB-Logo-App-250x250.png', depth)}">
   <link rel="stylesheet" href="{css}">
   <script defer src="{js}"></script>
 </head>
@@ -198,7 +238,6 @@ def render_home(books: list[Book], assets: dict[str, str]) -> str:
     featured = books[-8:][::-1]
     cards = "".join(book_card(book, 0) for book in featured)
     hero_bg = rel(assets["hero_bg"], 0)
-    logo = rel(assets["logo"], 0)
     book = rel(assets["book"], 0)
     read_bg = rel(assets["read_bg"], 0)
     character_bg = rel(assets["character_bg"], 0)
@@ -206,10 +245,9 @@ def render_home(books: list[Book], assets: dict[str, str]) -> str:
     moon_bg = rel(assets["moon_bg"], 0)
     return page_start("Discover", 0, "home") + f"""
   <main>
-    <section class="hero" style="--hero-image: url('{hero_bg}')">
+    <section class="hero" style="background: url('{hero_bg}') center/cover no-repeat">
       <div class="hero-mask"></div>
       <div class="hero-copy">
-        <img class="hero-logo" src="{logo}" alt="The Secret Books">
         <h1>The Secret Books</h1>
         <p>Ancient writings, apocrypha, visions, gospels, epistles, and hidden histories gathered into one quiet library.</p>
         <div class="hero-actions">
@@ -245,7 +283,7 @@ def render_home(books: list[Book], assets: dict[str, str]) -> str:
     </section>
 
     <section class="author-information">
-      <div class="author-photo" style="--author-image: url('{book}')"></div>
+      <div class="author-photo" style="background: url('{book}') center/contain no-repeat #f5f5f7"></div>
       <div class="author-bio">
         <p class="eyebrow">The Secret Books</p>
         <h2>These books are part of our history, and they should be studied.</h2>
@@ -335,7 +373,6 @@ def render_book(book: Book, previous_book: Book | None, next_book: Book | None) 
       <aside class="book-aside">
         <img class="book-cover" src="{cover}" alt="">
         <a class="button primary full" href="{pdf}" download>Download PDF</a>
-        <a class="button full" href="{escape(book.original_url)}">Original Page</a>
       </aside>
       <section class="book-reader">
         <p class="eyebrow">The Secret Books</p>
@@ -427,7 +464,7 @@ def fetch_all(endpoint: str, base_url: str = BASE_URL, per_page: int = 100) -> l
     return items
 
 
-def collect_books() -> list[Book]:
+def collect_books(book_cover_asset: str = "") -> list[Book]:
     fields = "_fields=id,slug,link,title,content,excerpt,featured_media&orderby=date&order=asc"
     primary_posts = fetch_all(f"wp-json/wp/v2/posts?{fields}", BASE_URL)
     fallback_posts = fetch_all(f"wp-json/wp/v2/posts?{fields}", FALLBACK_URL)
@@ -474,7 +511,7 @@ def collect_books() -> list[Book]:
                 pdf_url=pdf_url,
                 pdf_asset=download_asset(pdf_url, "pdfs"),
                 cover_url=cover_url,
-                cover_asset=download_asset(cover_url, "img/covers"),
+                cover_asset=book_cover_asset or download_asset(cover_url, "img/covers"),
                 original_url=post["link"],
                 source_site=source_site,
                 pdf_note=pdf_note,
@@ -500,21 +537,19 @@ def collect_site_assets() -> tuple[dict[str, str], str]:
         "ibook_pdf": f"{BASE_URL}/wp-content/uploads/edd/2024/05/The-Secret-Books.pdf",
     }
     assets = {key: download_asset(url, "img" if not url.endswith(".pdf") else "pdfs") for key, url in urls.items()}
+    for key, source in LOCAL_ASSET_SOURCES.items():
+        assets[key] = copy_local_asset(source, "img")
     audio_url = f"{BASE_URL}/wp-content/uploads/edd/2024/06/FREE-music-Symphony-of-Specters-Intense-Cinematic-Trailer.mp3"
     audio_asset = download_asset(audio_url, "audio")
     return assets, audio_asset
 
 
 def write_static_assets() -> None:
-    write(
-        ASSETS / "css" / "styles.css",
-        """*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{margin:0;max-width:100%;overflow-x:hidden;background:#d1b7e2;color:#130c0c;font-family:Arial,Helvetica,sans-serif;line-height:1.55;border:3px solid #1e73be}a{color:inherit;text-decoration:none}img{max-width:100%;display:block}.site-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:24px;margin:1em;padding:12px clamp(18px,4vw,54px);background:#980000;border:3px solid #ff0000;box-shadow:5px 5px 5px 1px #ddd}.brand{display:flex;align-items:center;gap:10px;color:#fdfdfd;font-weight:800;letter-spacing:.08em;text-shadow:1px 1px 4px #000;text-transform:uppercase}.brand img{width:42px;height:42px;filter:grayscale(50%)}.site-header nav{display:flex;flex-wrap:wrap;gap:0;background:#e06666}.site-header nav a{padding:10px 14px;color:#fff;font-weight:700}.site-header nav a:hover{background:#bf9456;color:#111}.hero{position:relative;min-height:72vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,460px);align-items:center;gap:42px;padding:clamp(36px,6vw,82px) clamp(18px,6vw,86px);background:var(--hero-image) center/cover no-repeat;overflow:hidden}.hero-mask{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.28));z-index:0}.hero-copy,.hero-book{position:relative;z-index:1;min-width:0}.hero-logo{width:min(300px,60vw);margin-bottom:12px}.hero h1,.page-hero h1,.book-reader h1,.product-copy h1{margin:0;color:#fff;font-family:Montserrat,Arial Black,Arial,sans-serif;font-size:clamp(2.35rem,6vw,5.6rem);font-style:italic;line-height:.95;text-shadow:2px 2px 6px #000;overflow-wrap:anywhere}.hero p,.page-hero p,.book-reader p,.product-copy p{max-width:720px;color:#f1c232;font-size:clamp(1rem,1.5vw,1.18rem);line-height:30px}.hero-book{max-height:58vh;justify-self:center;filter:drop-shadow(0 34px 34px rgba(0,0,0,.55))}.hero-actions,.reader-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #bf9456;border-radius:6px;background:#111;color:#fff;font-weight:750}.button:hover{background:#e06666;color:#111}.button.primary{background:#bf9456;color:#15120c;border-color:#bf9456}.button.full{width:100%;margin-top:10px}.book-read{padding:clamp(50px,7vw,110px) clamp(18px,8vw,100px);background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.38)),var(--read-image) center/cover fixed no-repeat;overflow:hidden}.book-read-inner{max-width:820px;color:#fff}.book-read h2,.characters-information h2,.author-bio h2,.features-information h2,.blog-information h2{margin:0 0 12px;font-family:Montserrat,Arial Black,Arial,sans-serif;font-size:clamp(2rem,4.5vw,4.2rem);font-style:italic;line-height:1;color:#eeee22;text-shadow:2px 2px 4px #000;overflow-wrap:anywhere}.book-read p,.characters-information p,.author-bio p,.features-information p,.blog-information p{font-size:17px;line-height:30px}.characters-information{padding:clamp(42px,6vw,84px) clamp(18px,7vw,92px);background:linear-gradient(rgba(147,196,125,.86),rgba(147,196,125,.86)),var(--character-image) center/cover no-repeat;overflow:hidden}.character-slide{display:grid;grid-template-columns:250px minmax(0,760px);gap:28px;align-items:center;margin-top:24px}.character-slide img{width:250px;height:250px;object-fit:cover;border:6px solid #f1c232}.character-slide h3{margin:0;color:#741b47;font-size:clamp(1.4rem,3vw,2.4rem);overflow-wrap:anywhere}.author-information{display:grid;grid-template-columns:minmax(220px,42%) minmax(0,1fr);min-height:420px;background:#a4c2f4;overflow:hidden}.author-photo{min-height:420px;background:var(--author-image) center/contain no-repeat #111}.author-bio{padding:clamp(34px,6vw,84px);align-self:center;min-width:0}.features-information{padding:clamp(42px,6vw,84px) clamp(18px,7vw,92px);background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.45)),var(--moon-image) center/cover no-repeat;color:#fff;overflow:hidden}.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:28px}.feature-box{min-height:220px;padding:24px;border:1px solid rgba(241,194,50,.5);background:rgba(152,0,0,.62)}.feature-box h3{margin:0 0 12px;color:#f1c232;font-size:1.35rem}.blog-information{padding:clamp(42px,6vw,84px) clamp(18px,7vw,92px);background:#a4c2f4;overflow:hidden}.secret-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:24px}.section{padding:clamp(34px,5vw,72px) clamp(18px,6vw,86px);overflow:hidden}.band{background:#93c47d}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:24px}.section-heading h2{margin:0;font-family:Montserrat,Arial Black,Arial,sans-serif;font-size:clamp(1.8rem,4vw,3.4rem);font-style:italic;color:#000;overflow-wrap:anywhere}.eyebrow{margin:0 0 8px;color:#741b47;font-size:.78rem;font-weight:850;letter-spacing:.16em;text-transform:uppercase}.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:18px}.book-grid.compact{grid-template-columns:repeat(auto-fit,minmax(154px,1fr))}.book-card{border:1px solid rgba(0,0,0,.18);border-radius:8px;background:rgba(255,255,255,.55);overflow:hidden;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.book-card:hover{transform:translateY(-3px);border-color:#980000;box-shadow:0 12px 22px rgba(0,0,0,.22)}.book-card a{display:grid;grid-template-rows:1fr auto;height:100%}.book-card img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#17150f}.book-card span{min-height:66px;padding:12px;color:#000;font-weight:760}.centered{text-align:center;margin-top:28px}.page-hero{padding:clamp(34px,6vw,82px) clamp(18px,6vw,86px);background:#a4c2f4;border-bottom:3px solid #1e73be}.page-hero.narrow{min-height:unset}.page-hero p,.book-reader p,.product-copy p{color:#000}.search-label{display:grid;gap:6px;max-width:520px;margin-top:24px}.search-label span{color:#741b47;font-weight:760}.search-label input{width:100%;min-height:48px;border:1px solid #980000;border-radius:6px;background:#fff;color:#17150f;padding:0 14px;font:inherit}.book-layout{display:grid;grid-template-columns:minmax(220px,340px) minmax(0,1fr);gap:34px;padding:clamp(26px,5vw,62px) clamp(18px,5vw,68px);background:#93c47d}.book-aside{position:sticky;top:110px;align-self:start}.book-cover{width:100%;border-radius:8px;border:3px solid #bf9456;background:#17150f}.book-reader{min-width:0}.book-reader h1,.product-copy h1{color:#111;text-shadow:none}.pdf-frame{width:100%;height:min(78vh,920px);margin-top:24px;border:3px solid #bf9456;border-radius:8px;background:#fff}.product-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,440px);align-items:center;gap:42px;padding:clamp(34px,6vw,84px) clamp(18px,6vw,86px);background:#a4c2f4}.product-image{justify-self:center;max-height:620px;filter:drop-shadow(0 28px 30px rgba(0,0,0,.46))}.product-image.phone{max-height:520px}.pdf-panel,.audio-panel{padding:0 clamp(18px,6vw,86px) clamp(34px,6vw,72px);background:#a4c2f4}.audio-panel audio{width:100%;max-width:760px}.site-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:24px clamp(18px,4vw,54px);color:#000;background:#ededed}.site-footer p{margin:0}.hidden{display:none!important}@media (max-width:760px){.site-header{align-items:flex-start;flex-direction:column}.site-header nav a{padding:10px 12px}.hero,.book-layout,.product-layout,.author-information,.character-slide,.feature-grid,.secret-three{grid-template-columns:1fr}.hero{min-height:58vh;padding-left:28px;padding-right:28px}.book-read,.characters-information,.features-information,.blog-information,.section,.product-layout,.page-hero{padding-left:28px;padding-right:28px}.hero-copy,.book-read-inner,.character-slide>div,.author-bio,.features-information>*,.blog-information>*,.section>*{width:min(300px,calc(100vw - 62px));max-width:min(300px,calc(100vw - 62px));justify-self:start}.hero h1{font-size:2.05rem;line-height:1.05}.hero p,.book-read p,.characters-information p,.author-bio p,.features-information p,.blog-information p{max-width:100%;font-size:16px;line-height:28px;overflow-wrap:anywhere}.book-read h2,.characters-information h2,.author-bio h2,.features-information h2,.blog-information h2,.section-heading h2{font-size:1.75rem;line-height:1.1}.hero-actions,.reader-actions{display:grid;grid-template-columns:1fr;width:100%;max-width:100%}.button{width:100%;white-space:normal;text-align:center}.hero-book{max-height:360px}.section-heading{display:block}.book-aside{position:static}.pdf-frame{height:68vh}.book-grid{grid-template-columns:repeat(auto-fill,minmax(136px,1fr))}.book-card span{min-height:78px}.author-photo{min-height:300px}}""",
-    )
+    write(ASSETS / "css" / "styles.css", SITE_CSS + SITE_CSS_OVERRIDES)
     write(
         ASSETS / "js" / "site.js",
         """document.addEventListener("DOMContentLoaded",()=>{const input=document.querySelector("[data-book-search]");const grid=document.querySelector("[data-book-grid]");if(!input||!grid)return;const cards=[...grid.querySelectorAll(".book-card")];input.addEventListener("input",()=>{const q=input.value.trim().toLowerCase();cards.forEach(card=>{card.classList.toggle("hidden",q&&!card.dataset.title.includes(q));});});});""",
     )
-
 
 def main() -> None:
     if OUT.exists():
@@ -527,10 +562,11 @@ def main() -> None:
                 item.unlink()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
+    (OUT / "CNAME").write_text(f"{CUSTOM_DOMAIN}\n", encoding="utf-8")
 
     write_static_assets()
     assets, audio_asset = collect_site_assets()
-    books = collect_books()
+    books = collect_books(assets.get("book_cover", ""))
 
     write(OUT / "index.html", render_home(books, assets))
     write(OUT / "books" / "index.html", render_books_index(books))
@@ -544,7 +580,7 @@ def main() -> None:
         OUT / "checkout" / "index.html",
         render_placeholder("Checkout", "Checkout is not required for this library edition. The available books can be opened directly from the archive."),
     )
-    write(OUT / "404.html", render_placeholder("Page Not Found", "The page was not included in the static export.", 0))
+    write(OUT / "404.html", render_placeholder("Page Not Found", "The page was not found in this library.", 0))
 
     for index, book in enumerate(books):
         previous_book = books[index - 1] if index > 0 else None
